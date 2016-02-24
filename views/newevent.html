@@ -38,41 +38,41 @@
         <h1>Dodaj imprezę</h1>
         <p>Wypełnij pola formularza, aby dodać nową imprezę na orientację.</p>
     </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" action="newevent" method="post">
         <div class="form-group">
             <label for="oEventName" class="col-sm-2 control-label">Nazwa</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="oEventName" placeholder="Nazwa InO">
+                <input type="text" class="form-control" id="oEventName" name="oEventName" placeholder="Nazwa InO">
             </div>
         </div>
         <div class="form-group">
-            <label for="oEventLocation" class="col-sm-2 control-label">Miejsce</label>
+            <label for="oEventLocation" class="col-sm-2 control-label">Lokalizacja</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="oEventLocation" placeholder="Miejsce InO">
+                <input type="text" class="form-control" id="oEventLocation" name="oEventLocation" placeholder="Lokalizacja InO">
             </div>
         </div>
         <div class="form-group">
             <label for="oEventDate" class="col-sm-2 control-label">Data</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" id="oEventDate" placeholder="Data InO">
+                <input type="date" class="form-control" id="oEventDate" name="oEventDate" placeholder="Data InO">
             </div>
         </div>
         <div class="form-group">
             <label for="oCourse" class="col-sm-2 control-label">Trasa</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="oCourse" placeholder="Rodzaj trasy">
+                <input type="text" class="form-control" id="oCourse" name="oCourse" placeholder="Rodzaj trasy">
             </div>
         </div>
         <div class="form-group">
             <label for="oCup" class="col-sm-2 control-label">Puchar</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="oCup" placeholder="Nazwa pucharu">
+                <input type="text" class="form-control" id="oCup" name="oCup" placeholder="Nazwa pucharu">
             </div>
         </div>
         <div class="form-group">
             <label for="oRank" class="col-sm-2 control-label">Miejsce</label>
             <div class="col-sm-10">
-                <input type="number" min="1" class="form-control" id="oRank" placeholder="Zajęte miejsce">
+                <input type="number" min="1" class="form-control" id="oRank" name="oRank" placeholder="Zajęte miejsce">
             </div>
         </div>
         <div class="form-group">
