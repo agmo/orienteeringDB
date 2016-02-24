@@ -8,9 +8,9 @@ exports.createOEvent = function (req, res) {
         oEventName: req.body.oEventName,
         oEventLocation: req.body.oEventLocation,
         oEventDate: req.body.oEventDate,
-        course: req.body.course,
+        course: req.body.oCourse,
         oCup: req.body.oCup,
-        ranked: req.body.ranked
+        ranked: req.body.oRank
     });
 
     entry.save();

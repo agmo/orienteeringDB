@@ -8,9 +8,9 @@ var oEventsSchema = new Schema({
     oEventName: String,
     oEventLocation: String,
     oEventDate: Date,
-    course: String,
+    oCourse: String,
     oCup: String,
-    ranked: Number,
+    oRank: Number,
     createdOn: {type: Date, default: Date.now}
 });
 
