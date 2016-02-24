@@ -8,14 +8,17 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://agmo:agmo666@ds062898.mongolab.com:62898/orienteering_db');
 
-var swig = require('swig');
-app.engine('html', swig.renderFile);
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+
+var swig = require('swig');
+app.engine('html', swig.renderFile);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
