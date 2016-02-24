@@ -3,7 +3,7 @@
  */
 var oEvent = require('../models/orienteering.server.model.js');
 
-exports.create = function (req, res) {
+exports.createOEvent = function (req, res) {
     var entry = new oEvent({
         oEventName: req.body.oEventName,
         oEventLocation: req.body.oEventLocation,
@@ -12,4 +12,11 @@ exports.create = function (req, res) {
         oCup: req.body.oCup,
         ranked: req.body.ranked
     });
+
+    entry.save();
+    res.redirect(301, '/');
+};
+
+exports.getOEvent = function (req, res) {
+    res.render('newevent', {title: 'Dodaj InO'});
 };
