@@ -4,7 +4,7 @@ var orienteeringCtrl = require('../controllers/orienteering.server.controller.js
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  return orienteeringCtrl.listOEvents(req, res);
 });
 
 /* GET new oEvent page. */

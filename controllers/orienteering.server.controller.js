@@ -3,14 +3,24 @@
  */
 var oEvent = require('../models/orienteering.server.model.js');
 
+exports.listOEvents = function (req, res) {
+    console.log(req, res);
+  var query = oEvent.find();
+  query.sort({createdOn: 'desc'})
+      .limit(10)
+      .exec(function (err, results) {
+          res.render('index', {events: results})
+      });
+};
+
 exports.createOEvent = function (req, res) {
     var entry = new oEvent({
         oEventName: req.body.oEventName,
         oEventLocation: req.body.oEventLocation,
         oEventDate: req.body.oEventDate,
-        course: req.body.oCourse,
+        oCourse: req.body.oCourse,
         oCup: req.body.oCup,
-        ranked: req.body.oRank
+        oRank: req.body.oRank
     });
 
     entry.save();
