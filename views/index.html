@@ -57,12 +57,12 @@
                 {% for event in events %}
                 <tr>
                     <th scope="row">{{loop.index}}</th>
-                    <td>{{event.oEventName}}</td>
-                    <td>{{event.oEventLocation}}</td>
+                    <td>{{event.oEventName|default('-')}}</td>
+                    <td>{{event.oEventLocation|default('-')}}</td>
                     <td>{{event.oEventDate|date('Y-m-d')}}</td>
-                    <td>{{event.oCourse}}</td>
-                    <td>{{event.oCup}}</td>
-                    <td>{{event.oRank}}</td>
+                    <td>{{event.oCourse|default('-')}}</td>
+                    <td>{{event.oCup|default('-')}}</td>
+                    <td>{{event.oRank|default('-')}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
