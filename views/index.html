@@ -45,31 +45,81 @@
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
-                <th>Lp.</th>
-                <th>Nazwa</th>
-                <th>Lokalizacja</th>
-                <th>Data</th>
-                <th>Trasa</th>
-                <th>Puchar</th>
-                <th>Miejsce</th>
+            <th>Lp.</th>
+            <th>Nazwa
+                <form action="/?sortBy=oEventName&sortOrder={% if oEventNameSortOrder %}{{oEventNameSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByName" type="submit">
+                        <span class="glyphicon {% if oEventNameSortIcon %}{{oEventNameSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
+            <th>Lokalizacja
+                <form action="/?sortBy=oEventLocation&sortOrder={% if oEventLocationSortOrder %}{{oEventLocationSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByLocation" type="submit">
+                        <span class="glyphicon {% if oEventLocationSortIcon %}{{oEventLocationSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
+            <th>Data
+                <form action="/?sortBy=oEventDate&sortOrder={% if oEventDateSortOrder %}{{oEventDateSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByDate" type="submit">
+                        <span class="glyphicon {% if oEventDateSortIcon %}{{oEventDateSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
+            <th>Trasa
+                <form action="/?sortBy=oCourse&sortOrder={% if oCourseSortOrder %}{{oCourseSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByCourse" type="submit">
+                        <span class="glyphicon {% if oCourseSortIcon %}{{oCourseSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
+            <th>Puchar
+                <form action="/?sortBy=oCup&sortOrder={% if oCupSortOrder %}{{oCupSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByCup" type="submit">
+                        <span class="glyphicon {% if oCupSortIcon %}{{oCupSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
+            <th>Miejsce
+                <form action="/?sortBy=oRank&sortOrder={% if oRankSortOrder %}{{oRankSortOrder}}{% else %}asc{% endif %}"
+                      method="post" class="inlineForm">
+                    <button class="btn btn-default btn-xs" name="btnSortByRank" type="submit">
+                        <span class="glyphicon {% if oRankSortIcon %}{{oRankSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                              aria-hidden="true"></span>
+                    </button>
+                </form>
+            </th>
             </thead>
             <tbody>
-                {% for event in events %}
-                <tr>
-                    <th scope="row">{{loop.index}}</th>
-                    <td>{{event.oEventName|default('-')}}</td>
-                    <td>{{event.oEventLocation|default('-')}}</td>
-                    <td>{{event.oEventDate|date('Y-m-d')}}</td>
-                    <td>{{event.oCourse|default('-')}}</td>
-                    <td>{{event.oCup|default('-')}}</td>
-                    <td>{{event.oRank|default('-')}}</td>
-                </tr>
-                {% endfor %}
+            {% for event in events %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{event.oEventName|default('-')}}</td>
+                <td>{{event.oEventLocation|default('-')}}</td>
+                <td>{{event.oEventDate|date('Y-m-d')}}</td>
+                <td>{{event.oCourse|default('-')}}</td>
+                <td>{{event.oCup|default('-')}}</td>
+                <td>{{event.oRank|default('-')}}</td>
+            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
 </body>
 </html>
