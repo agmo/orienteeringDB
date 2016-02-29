@@ -2,6 +2,7 @@
  * Created by Agnieszka on 2016-02-24.
  */
 var oEvent = require('../models/orienteering.server.model.js');
+var endOfLine = require('os').EOL;
 
 exports.listOEvents = function (req, res) {
     var query = oEvent.find();
@@ -22,15 +23,34 @@ exports.createOEvent = function (req, res) {
         oRank: req.body.oRank
     });
 
-    entry.save();
-    res.redirect(301, '/');
+    entry.save(function (err) {
+        if (err) {
+            err.name = 'Błąd walidacji:';
+            err.errors.oEventName.path = 'Nazwa';
+            err.errors.oEventLocation.path = 'Lokalizacja';
+            err.errors.oEventDate.path = 'Data';
+            err.errors.oCourse.path = 'Trasa';
+            err.errors.oCup.path = 'Puchar';
+            //err.errors.oRank.path = err.errors.oRank.path && 'Miejsce';
+
+            var errList = [];
+            for (var prop in err.errors) {
+                errList.push(' Pole ', err.errors[prop].path, err.errors[prop], '. \n');
+            }
+
+            var errMsg = 'Nie udało się zapisać imprezy w bazie danych. \n' + err.name + errList.join('');
+            res.render('newevent', {errorMessage: errMsg});
+        } else {
+            res.redirect(301, '/');
+        }
+    });
 };
 
 exports.getOEvent = function (req, res) {
     res.render('newevent', {title: 'Dodaj InO'});
 };
 
-exports.sortOEvents = function(req, res) {
+exports.sortOEvents = function (req, res) {
     var query = oEvent.find();
 
     var sortObj = {};
@@ -39,14 +59,14 @@ exports.sortOEvents = function(req, res) {
 
     query.sort(sortObj);
 
-    query.exec(function(err, results) {
+    query.exec(function (err, results) {
         var renderObj = {};
         var eventsKey = 'events';
         var orderKey = req.query.sortBy + 'SortOrder';
         var iconKey = req.query.sortBy + 'SortIcon';
         renderObj[eventsKey] = results;
-        renderObj[orderKey] = (req.query.sortOrder === 'asc') ? 'desc':'asc';
-        renderObj[iconKey] = (req.query.sortOrder === 'asc') ? 'glyphicon-sort-by-attributes':'glyphicon-sort-by-attributes-alt';
+        renderObj[orderKey] = (req.query.sortOrder === 'asc') ? 'desc' : 'asc';
+        renderObj[iconKey] = (req.query.sortOrder === 'asc') ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt';
 
         res.render('index', renderObj);
     });

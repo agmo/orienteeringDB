@@ -37,13 +37,13 @@
 <main class="container">
     <div class="text-center">
         <h1>Dodaj imprezę</h1>
-        <p>Wypełnij pola formularza, aby dodać nową imprezę na orientację.</p>
+        <p>Wypełnij formularz, aby dodać nową imprezę na orientację. Wymagane pola są oznaczone gwiazdką.</p>
     </div>
     <form class="form-horizontal" action="newevent" method="post">
         <div class="form-group">
-            <label for="oEventName" class="col-sm-2 control-label">Nazwa</label>
+            <label for="oEventName" class="col-sm-2 control-label">Nazwa*</label>
             <div class="col-sm-10">
-                <input required type="text" class="form-control" id="oEventName" name="oEventName" placeholder="Nazwa InO">
+                <input type="text" class="form-control" id="oEventName" name="oEventName" placeholder="Nazwa InO">
             </div>
         </div>
         <div class="form-group">
@@ -53,9 +53,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="oEventDate" class="col-sm-2 control-label">Data</label>
+            <label for="oEventDate" class="col-sm-2 control-label">Data*</label>
             <div class="col-sm-10">
-                <input required type="date" class="form-control" id="oEventDate" name="oEventDate" placeholder="Data InO">
+                <input type="date" class="form-control" id="oEventDate" name="oEventDate" placeholder="Data InO">
             </div>
         </div>
         <div class="form-group">
@@ -82,6 +82,11 @@
             </div>
         </div>
     </form>
+    {% if errorMessage.length > 0 %}
+    <div class="alert alert-danger alert-error">
+        {{errorMessage}}
+    </div>
+    {% endif %}
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
