@@ -26,12 +26,24 @@ exports.createOEvent = function (req, res) {
     entry.save(function (err) {
         if (err) {
             err.name = 'Błąd walidacji:';
-            err.errors.oEventName.path = 'Nazwa';
-            err.errors.oEventLocation.path = 'Lokalizacja';
-            err.errors.oEventDate.path = 'Data';
-            err.errors.oCourse.path = 'Trasa';
-            err.errors.oCup.path = 'Puchar';
-            //err.errors.oRank.path = err.errors.oRank.path && 'Miejsce';
+            if (err.errors.oEventName) {
+                err.errors.oEventName.path = 'Nazwa';
+            }
+            if (err.errors.oEventLocation) {
+                err.errors.oEventLocation.path = 'Lokalizacja';
+            }
+            if (err.errors.oEventDate) {
+                err.errors.oEventDate.path = 'Data';
+            }
+            if (err.errors.oCourse) {
+                err.errors.oCourse.path = 'Trasa';
+            }
+            if (err.errors.oCup) {
+                err.errors.oCup.path = 'Puchar';
+            }
+            if (err.errors.oRank) {
+                err.errors.oRank.path = 'Miejsce';
+            }
 
             var errList = [];
             for (var prop in err.errors) {

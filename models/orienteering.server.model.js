@@ -3,11 +3,13 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var matchString = /^[0-9a-ząćęłńóśźż \-_]+$/ig;
+var matchString = /^[0-9a-ząćęłńóśźż \-_]+$/i;
 
 var requiredNonEmptyVal = [
     function (value) {
-        if (value !== null) {
+        console.log('wartość: ', value);
+        if (value) {
+            value = String(value);
             value = value.trim();
             return value.length > 0;
         }
@@ -15,6 +17,8 @@ var requiredNonEmptyVal = [
 ];
 
 mongoose.Error.messages.general.required = ' jest wymagane';
+mongoose.Error.messages.String.match = ' zawierało nieprawidłową wartość ({VALUE})';
+mongoose.Error.messages.Number.min = ' zawierało zbyt małą wartość ({VALUE})';
 
 var oEventsSchema = new Schema({
     oEventName: {type: String, required: true, match: matchString, validate: requiredNonEmptyVal},
