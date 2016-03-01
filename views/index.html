@@ -47,55 +47,55 @@
             <thead>
             <th>Lp.</th>
             <th>Nazwa
-                <form action="/?sortBy=oEventName&sortOrder={% if oEventNameSortOrder %}{{oEventNameSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oEventName&sortOrder={{oEventNameSortOrder if oEventNameSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByName" type="submit">
-                        <span class="glyphicon {% if oEventNameSortIcon %}{{oEventNameSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oEventNameSortIcon if oEventNameSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
             </th>
             <th>Lokalizacja
-                <form action="/?sortBy=oEventLocation&sortOrder={% if oEventLocationSortOrder %}{{oEventLocationSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oEventLocation&sortOrder={{oEventLocationSortOrder if oEventLocationSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByLocation" type="submit">
-                        <span class="glyphicon {% if oEventLocationSortIcon %}{{oEventLocationSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oEventLocationSortIcon if oEventLocationSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
             </th>
             <th>Data
-                <form action="/?sortBy=oEventDate&sortOrder={% if oEventDateSortOrder %}{{oEventDateSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oEventDate&sortOrder={{oEventDateSortOrder if oEventDateSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByDate" type="submit">
-                        <span class="glyphicon {% if oEventDateSortIcon %}{{oEventDateSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oEventDateSortIcon if oEventDateSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
             </th>
             <th>Trasa
-                <form action="/?sortBy=oCourse&sortOrder={% if oCourseSortOrder %}{{oCourseSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oCourse&sortOrder={{oCourseSortOrder if oCourseSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByCourse" type="submit">
-                        <span class="glyphicon {% if oCourseSortIcon %}{{oCourseSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oCourseSortIcon if oCourseSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
             </th>
             <th>Puchar
-                <form action="/?sortBy=oCup&sortOrder={% if oCupSortOrder %}{{oCupSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oCup&sortOrder={{oCupSortOrder if oCupSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByCup" type="submit">
-                        <span class="glyphicon {% if oCupSortIcon %}{{oCupSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oCupSortIcon if oCupSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
             </th>
             <th>Miejsce
-                <form action="/?sortBy=oRank&sortOrder={% if oRankSortOrder %}{{oRankSortOrder}}{% else %}asc{% endif %}"
+                <form action="/?sortBy=oRank&sortOrder={{oRankSortOrder if oRankSortOrder else 'asc'}}"
                       method="post" class="inlineForm">
                     <button class="btn btn-default btn-xs" name="btnSortByRank" type="submit">
-                        <span class="glyphicon {% if oRankSortIcon %}{{oRankSortIcon}}{% else %}glyphicon-sort{% endif %}"
+                        <span class="glyphicon {{oRankSortIcon if oRankSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
                     </button>
                 </form>
@@ -105,12 +105,12 @@
             {% for event in events %}
             <tr>
                 <th scope="row">{{loop.index}}</th>
-                <td>{{event.oEventName|default('-')}}</td>
-                <td>{{event.oEventLocation|default('-')}}</td>
-                <td>{{event.oEventDate|date('Y-m-d')}}</td>
-                <td>{{event.oCourse|default('-')}}</td>
-                <td>{{event.oCup|default('-')}}</td>
-                <td>{{event.oRank|default('-')}}</td>
+                <td>{{event.oEventName}}</td>
+                <td>{{event.oEventLocation|default('-', true)}}</td>
+                <td>{{event.oEventDate|date}}</td>
+                <td>{{event.oCourse|default('-', true)}}</td>
+                <td>{{event.oCup|default('-', true)}}</td>
+                <td>{{event.oRank|default('-', true)}}</td>
             </tr>
             {% endfor %}
             </tbody>

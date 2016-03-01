@@ -17,8 +17,27 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 
-var swig = require('swig');
-app.engine('html', swig.renderFile);
+var nunjucks = require('nunjucks');
+var env = nunjucks.configure('views', {
+  autoescape: true,
+  express: app
+});
+
+env.addFilter('date', function (dateObj) {
+  var day = dateObj.getDate();
+  var month = dateObj.getMonth() + 1;
+  var year = dateObj.getFullYear();
+
+  if (day < 10) {
+    day = '0' + day;
+  }
+
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  return day + '.' + month + '.' + year;
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

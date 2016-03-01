@@ -5,28 +5,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var matchString = /^[0-9a-ząćęłńóśźż \-_]+$/i;
 
-var requiredNonEmptyVal = [
-    function (value) {
-        console.log('wartość: ', value);
-        if (value) {
-            value = String(value);
-            value = value.trim();
-            return value.length > 0;
-        }
-    }, ' nie może być puste'
-];
-
 mongoose.Error.messages.general.required = ' jest wymagane';
 mongoose.Error.messages.String.match = ' zawierało nieprawidłową wartość ({VALUE})';
 mongoose.Error.messages.Number.min = ' zawierało zbyt małą wartość ({VALUE})';
 
 var oEventsSchema = new Schema({
-    oEventName: {type: String, trim: true, required: true, match: matchString, validate: requiredNonEmptyVal},
-    oEventLocation: { type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
-    oEventDate: {type: Date, required: true, validate: requiredNonEmptyVal},
-    oCourse: {type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
-    oCup: {type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
-    oRank: {type: Number, min: 1, validate: requiredNonEmptyVal},
+    oEventName: {type: String, trim: true, required: true, match: matchString},
+    oEventLocation: { type: String, trim: true, match: matchString},
+    oEventDate: {type: Date, required: true},
+    oCourse: {type: String, trim: true, match: matchString},
+    oCup: {type: String, trim: true, match: matchString},
+    oRank: {type: Number, min: 1},
     createdOn: {type: Date, default: Date.now}
 });
 
