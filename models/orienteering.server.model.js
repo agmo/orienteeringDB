@@ -21,11 +21,11 @@ mongoose.Error.messages.String.match = ' zawierało nieprawidłową wartość ({
 mongoose.Error.messages.Number.min = ' zawierało zbyt małą wartość ({VALUE})';
 
 var oEventsSchema = new Schema({
-    oEventName: {type: String, required: true, match: matchString, validate: requiredNonEmptyVal},
-    oEventLocation: { type: String, match: matchString, validate: requiredNonEmptyVal},
+    oEventName: {type: String, trim: true, required: true, match: matchString, validate: requiredNonEmptyVal},
+    oEventLocation: { type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
     oEventDate: {type: Date, required: true, validate: requiredNonEmptyVal},
-    oCourse: {type: String, match: matchString, validate: requiredNonEmptyVal},
-    oCup: {type: String, match: matchString, validate: requiredNonEmptyVal},
+    oCourse: {type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
+    oCup: {type: String, trim: true, match: matchString, validate: requiredNonEmptyVal},
     oRank: {type: Number, min: 1, validate: requiredNonEmptyVal},
     createdOn: {type: Date, default: Date.now}
 });
