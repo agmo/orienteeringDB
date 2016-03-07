@@ -2,15 +2,73 @@
  * Created by Agnieszka on 2016-02-24.
  */
 var oEvent = require('../models/orienteering.server.model.js');
-var endOfLine = require('os').EOL;
+
+var totalPages;
+oEvent.count({}, function (err, count) {
+    totalPages = count;
+});
+
+var paginate = (function () {
+    var cache = {
+        currentPage: 1
+    };
+    return function (query, pageNo) {
+        var pageSize = 10;
+        var pageCount = Math.ceil(totalPages / pageSize);
+
+        cache.currentPage = pageNo || cache.currentPage;
+        query.skip((cache.currentPage - 1) * pageSize).limit(pageSize);
+
+        return {
+            pageCount: pageCount,
+            currentPage: cache.currentPage
+        };
+    };
+}());
+
+var sortOEvents = function (query, sortBy, sortOrder) {
+    var sortObj = {};
+    var sortKey = sortBy;
+    sortObj[sortKey] = sortOrder;
+
+    var renderObj = {};
+    var orderKey = sortBy + 'SortOrder';
+    var iconKey = sortBy + 'SortIcon';
+    renderObj[orderKey] = (sortOrder === 'asc') ? 'desc' : 'asc';
+    renderObj[iconKey] = (sortOrder === 'asc') ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt';
+    renderObj.sortCriterion = sortBy;
+    renderObj.sortOrder = sortOrder;
+
+    return {
+        query: query.sort(sortObj),
+        renderObj: renderObj
+    };
+};
 
 exports.listOEvents = function (req, res) {
+    var pageNo = parseInt(req.query.page) || 1;
     var query = oEvent.find();
-    query.sort({createdOn: 'desc'})
-        .limit(10)
-        .exec(function (err, results) {
-            res.render('index', {events: results})
-        });
+    var renderObj = {};
+
+    if (req.query.sortBy && req.query.sortOrder) {
+        var sortedQuery = sortOEvents(query, req.query.sortBy, req.query.sortOrder);
+        query = sortedQuery.query;
+        renderObj = sortedQuery.renderObj;
+    } else {
+        query.sort({createdOn: 'desc'});
+    }
+
+    var paginatedQuery = paginate(query, pageNo);
+
+    renderObj.pageCount = paginatedQuery.pageCount;
+    renderObj.currentPage = paginatedQuery.currentPage;
+
+    query.exec(function (err, results) {
+        var eventsKey = 'events';
+        renderObj[eventsKey] = results;
+
+        res.render('index', renderObj);
+    });
 };
 
 exports.createOEvent = function (req, res) {
@@ -60,26 +118,4 @@ exports.createOEvent = function (req, res) {
 
 exports.getOEvent = function (req, res) {
     res.render('newevent', {title: 'Dodaj InO'});
-};
-
-exports.sortOEvents = function (req, res) {
-    var query = oEvent.find();
-
-    var sortObj = {};
-    var sortKey = req.query.sortBy;
-    sortObj[sortKey] = req.query.sortOrder;
-
-    query.sort(sortObj);
-
-    query.exec(function (err, results) {
-        var renderObj = {};
-        var eventsKey = 'events';
-        var orderKey = req.query.sortBy + 'SortOrder';
-        var iconKey = req.query.sortBy + 'SortIcon';
-        renderObj[eventsKey] = results;
-        renderObj[orderKey] = (req.query.sortOrder === 'asc') ? 'desc' : 'asc';
-        renderObj[iconKey] = (req.query.sortOrder === 'asc') ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt';
-
-        res.render('index', renderObj);
-    });
 };

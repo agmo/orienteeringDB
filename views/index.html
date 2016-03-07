@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,58 +47,46 @@
             <thead>
             <th>Lp.</th>
             <th>Nazwa
-                <form action="/?sortBy=oEventName&sortOrder={{oEventNameSortOrder if oEventNameSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByName" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oEventName&sortOrder={{oEventNameSortOrder if oEventNameSortOrder else 'asc'}}"
+                   name="btnSortByName">
                         <span class="glyphicon {{oEventNameSortIcon if oEventNameSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             <th>Lokalizacja
-                <form action="/?sortBy=oEventLocation&sortOrder={{oEventLocationSortOrder if oEventLocationSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByLocation" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oEventLocation&sortOrder={{oEventLocationSortOrder if oEventLocationSortOrder else 'asc'}}"
+                   name="btnSortByLocation">
                         <span class="glyphicon {{oEventLocationSortIcon if oEventLocationSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             <th>Data
-                <form action="/?sortBy=oEventDate&sortOrder={{oEventDateSortOrder if oEventDateSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByDate" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oEventDate&sortOrder={{oEventDateSortOrder if oEventDateSortOrder else 'asc'}}"
+                   name="btnSortByDate">
                         <span class="glyphicon {{oEventDateSortIcon if oEventDateSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             <th>Trasa
-                <form action="/?sortBy=oCourse&sortOrder={{oCourseSortOrder if oCourseSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByCourse" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oCourse&sortOrder={{oCourseSortOrder if oCourseSortOrder else 'asc'}}"
+                   name="btnSortByCourse">
                         <span class="glyphicon {{oCourseSortIcon if oCourseSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             <th>Puchar
-                <form action="/?sortBy=oCup&sortOrder={{oCupSortOrder if oCupSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByCup" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oCup&sortOrder={{oCupSortOrder if oCupSortOrder else 'asc'}}"
+                   name="btnSortByCup">
                         <span class="glyphicon {{oCupSortIcon if oCupSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             <th>Miejsce
-                <form action="/?sortBy=oRank&sortOrder={{oRankSortOrder if oRankSortOrder else 'asc'}}"
-                      method="post" class="inlineForm">
-                    <button class="btn btn-default btn-xs" name="btnSortByRank" type="submit">
+                <a href="/?page={{currentPage + '&' if currentPage else '1&'}}sortBy=oRank&sortOrder={{oRankSortOrder if oRankSortOrder else 'asc'}}"
+                   name="btnSortByRank">
                         <span class="glyphicon {{oRankSortIcon if oRankSortIcon else 'glyphicon-sort'}}"
                               aria-hidden="true"></span>
-                    </button>
-                </form>
+                </a>
             </th>
             </thead>
             <tbody>
@@ -116,10 +104,48 @@
             </tbody>
         </table>
     </div>
+    {% if pageCount > 1 %}
+    <div class="text-right">
+        <nav>
+            <ul class="pagination pagination-sm pagination-right">
+                <li class="{{'enabled' if currentPage > 1 else 'disabled'}}">
+                    {% if currentPage > 1 %}
+                    <a href="/?page={{currentPage - 1}}{{'&sortBy=' + sortCriterion + '&sortOrder=' + sortOrder if sortCriterion}}"
+                       aria-label="Poprzednie">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    {% else %}
+                            <span>
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                    {% endif %}
+                </li>
+                {% for i in range(1, pageCount + 1) -%}
+                <li class="{{'active' if i == currentPage else ''}}">
+                    <a href="/?page={{i}}{{'&sortBy=' + sortCriterion + '&sortOrder=' + sortOrder if sortCriterion}}">{{i}}</a>
+                </li>
+                {%- endfor %}
+                <li class="{{'enabled' if pageCount > currentPage else 'disabled'}}">
+                    {% if pageCount > currentPage %}
+                    <a href="/?page={{currentPage + 1}}{{'&sortBy=' + sortCriterion + '&sortOrder=' + sortOrder if sortCriterion}}"
+                       aria-label="Następne">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    {% else %}
+                        <span>
+                            <span aria-hidden="true">&raquo;</span>
+                        </span>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 </body>
 </html>

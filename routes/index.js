@@ -7,10 +7,10 @@ router.get('/', function(req, res, next) {
   return orienteeringCtrl.listOEvents(req, res);
 });
 
- /* POST sort by - oEvent page. */
-router.post('/', function (req, res) {
-  return orienteeringCtrl.sortOEvents(req, res);
-});
+// /* POST sort by - oEvent page. */
+//router.post('/', function (req, res) {
+//  return orienteeringCtrl.sortOEvents(req, res);
+//});
 
 /* GET new oEvent page. */
 router.get('/newevent', function (req, res) {
