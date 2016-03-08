@@ -2,17 +2,13 @@
  * Created by Agnieszka on 2016-02-24.
  */
 var oEvent = require('../models/orienteering.server.model.js');
-
-var totalPages;
-oEvent.count({}, function (err, count) {
-    totalPages = count;
-});
+var test = require('../routes/index.js');
 
 var paginate = (function () {
     var cache = {
         currentPage: 1
     };
-    return function (query, pageNo) {
+    return function (query, pageNo, totalPages) {
         var pageSize = 10;
         var pageCount = Math.ceil(totalPages / pageSize);
 
@@ -46,6 +42,7 @@ var sortOEvents = function (query, sortBy, sortOrder) {
 };
 
 exports.listOEvents = function (req, res) {
+    console.log('test przekazany: ', req.test);
     var pageNo = parseInt(req.query.page) || 1;
     var query = oEvent.find();
     var renderObj = {};
@@ -58,7 +55,7 @@ exports.listOEvents = function (req, res) {
         query.sort({createdOn: 'desc'});
     }
 
-    var paginatedQuery = paginate(query, pageNo);
+    var paginatedQuery = paginate(query, pageNo, req.totalPages);
 
     renderObj.pageCount = paginatedQuery.pageCount;
     renderObj.currentPage = paginatedQuery.currentPage;
